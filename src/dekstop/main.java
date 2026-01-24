@@ -19,7 +19,7 @@ public class main {
         }
         System.out.println(userData);
     }
-    
+
     public void logUser(String user, String pass) {
         String pw = userData.get(user);
         if (userData.containsKey(user) && pass.equals(pw)) {

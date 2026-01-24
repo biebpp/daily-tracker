@@ -11,15 +11,15 @@ import javax.swing.JOptionPane;
  * @author rozy
  */
 public class loginFrame extends javax.swing.JFrame {
-    
+
     main main = new main();
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(loginFrame.class.getName());
 
     String[] yesNo = {"Tidak", "Ya"};
     boolean clickedUser = false;
     boolean clickedPass = false;
-    
+
     /**
      * Creates new form loginFrame
      */
@@ -249,23 +249,29 @@ public class loginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        if (!(userField.getText().equals("") && userField.getText().equals(""))) {
+        if (!(userField.getText().equals("") || userField.getText().equals(""))) {
             main.logUser(userField.getText(), passField.getText());
         } else {
-            JOptionPane.showMessageDialog
-                (null, "Username atau Password tidak boleh kosong", 
-                "Daily Tracker", HEIGHT);
+            JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
+                    "Daily Tracker", HEIGHT);
         }
-        
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
-        if (!(userField.getText().equals("") && userField.getText().equals(""))) {
-            main.addUser(userField.getText(), passField.getText());
+        if (!(userField.getText().equals("") || passField.getText().equals(""))) {
+            if (!(clickedUser && clickedPass)) {
+                JOptionPane.showMessageDialog(null, "Masukkan Username atau Password",
+                        "Daily Tracker", HEIGHT);
+            } else if (passField.getText().length() < 8) {
+                JOptionPane.showMessageDialog(null, "Password Harus Lebih dari 8 Digit",
+                        "Daily Tracker", HEIGHT);
+            } else {
+                main.addUser(userField.getText(), passField.getText());
+            }
         } else {
-            JOptionPane.showMessageDialog
-                (null, "Username atau Password tidak boleh kosong", 
-                "Daily Tracker", HEIGHT);
+            JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
+                    "Daily Tracker", HEIGHT);
         }
     }//GEN-LAST:event_regBtnActionPerformed
 
@@ -283,15 +289,13 @@ public class loginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_userFieldMouseClicked
 
     private void extBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extBtnActionPerformed
-        int yn = (JOptionPane.showOptionDialog
-            (null, "Apakah Anda Yakin?", "Daily Tracker", 0, 
-                    JOptionPane.QUESTION_MESSAGE, null, yesNo, 0));
-        
+        int yn = (JOptionPane.showOptionDialog(null, "Apakah Anda Yakin?", "Daily Tracker", 0,
+                JOptionPane.QUESTION_MESSAGE, null, yesNo, 0));
+
         if (yn == 1) {
-            JOptionPane.showMessageDialog
-                (null, "Anda telah Keluar dari Aplikasi Daily Tracker", 
-                "Daily Tracker", HEIGHT);
-                System.exit(0);
+            JOptionPane.showMessageDialog(null, "Anda telah Keluar dari Aplikasi Daily Tracker",
+                    "Daily Tracker", HEIGHT);
+            System.exit(0);
         }
     }//GEN-LAST:event_extBtnActionPerformed
 

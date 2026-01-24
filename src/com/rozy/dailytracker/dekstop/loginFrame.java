@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package dekstop;
+package com.rozy.dailytracker.dekstop;
 
+import com.rozy.dailytracker.main;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author rozy
- */
 public class loginFrame extends javax.swing.JFrame {
 
     main main = new main();
@@ -44,12 +37,13 @@ public class loginFrame extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         userField = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
-        passField = new javax.swing.JTextField();
+        passField = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         regBtn = new javax.swing.JButton();
         resetBtn = new javax.swing.JButton();
+        eyeBox = new javax.swing.JCheckBox();
         iconUser = new javax.swing.JLabel();
         extBtn = new javax.swing.JButton();
 
@@ -95,24 +89,23 @@ public class loginFrame extends javax.swing.JFrame {
         passField.setBackground(new java.awt.Color(200, 200, 200));
         passField.setForeground(new java.awt.Color(0, 0, 0));
         passField.setText("Masukkan Password Disini...");
-        passField.setPreferredSize(new java.awt.Dimension(68, 35));
+        passField.setEchoChar((char)0);
         passField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 passFieldMouseClicked(evt);
             }
         });
+        passField.addActionListener(this::passFieldActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(passField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(passField, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
         loginBtn.setBackground(new java.awt.Color(200, 200, 200));
@@ -123,11 +116,11 @@ public class loginFrame extends javax.swing.JFrame {
         loginBtn.addActionListener(this::loginBtnActionPerformed);
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/padlock.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/padlock.png"))); // NOI18N
         jLabel2.setText("Password");
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user24px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/user24px.png"))); // NOI18N
         jLabel1.setText("Username");
 
         regBtn.setBackground(new java.awt.Color(200, 200, 200));
@@ -144,20 +137,28 @@ public class loginFrame extends javax.swing.JFrame {
         resetBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         resetBtn.addActionListener(this::resetBtnActionPerformed);
 
+        eyeBox.setSelected(true);
+        eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/eye.png"))); // NOI18N
+        eyeBox.addActionListener(this::eyeBoxActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(eyeBox))
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -179,7 +180,9 @@ public class loginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(eyeBox)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -191,10 +194,10 @@ public class loginFrame extends javax.swing.JFrame {
         );
 
         iconUser.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
+        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/userIcon.png"))); // NOI18N
 
         extBtn.setBackground(new java.awt.Color(175, 175, 175));
-        extBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
+        extBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/close.png"))); // NOI18N
         extBtn.addActionListener(this::extBtnActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -236,21 +239,23 @@ public class loginFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 429, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 135, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+//    log and regist
+    
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        if (!(userField.getText().equals("") || userField.getText().equals(""))) {
-            main.logUser(userField.getText(), passField.getText());
+        if (!(userField.getText().equals("") || String.valueOf(passField.getPassword()).equals(""))) {
+            main.logUser(userField.getText(), String.valueOf(passField.getPassword()));
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
                     "Daily Tracker", HEIGHT);
@@ -259,15 +264,15 @@ public class loginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
-        if (!(userField.getText().equals("") || passField.getText().equals(""))) {
+        if (!(userField.getText().equals("") || String.valueOf(passField.getPassword()).equals(""))) {
             if (!(clickedUser && clickedPass)) {
                 JOptionPane.showMessageDialog(null, "Masukkan Username atau Password",
                         "Daily Tracker", HEIGHT);
-            } else if (passField.getText().length() < 8) {
+            } else if (String.valueOf(passField.getPassword()).length() < 8) {
                 JOptionPane.showMessageDialog(null, "Password Harus Lebih dari 8 Digit",
                         "Daily Tracker", HEIGHT);
             } else {
-                main.addUser(userField.getText(), passField.getText());
+                main.addUser(userField.getText(), String.valueOf(passField.getPassword()));
             }
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
@@ -275,6 +280,8 @@ public class loginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_regBtnActionPerformed
 
+//    user-related function
+    
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         userField.setText("");
         passField.setText("");
@@ -299,13 +306,28 @@ public class loginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_extBtnActionPerformed
 
+    private void eyeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eyeBoxActionPerformed
+        if (!eyeBox.isSelected()) {
+            eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/eye.png")));
+            passField.setEchoChar((char)0);
+        } else {
+            eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/view.png")));
+            passField.setEchoChar('*');
+        }
+    }//GEN-LAST:event_eyeBoxActionPerformed
+
     private void passFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passFieldMouseClicked
         if (!clickedPass) {
             passField.setText("");
+            eyeBox.setSelected(false);
         } else {
         }
         clickedPass = true;
     }//GEN-LAST:event_passFieldMouseClicked
+
+    private void passFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passFieldActionPerformed
 
     public void mainFrame() {
         /* Set the Nimbus look and feel */
@@ -331,6 +353,7 @@ public class loginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton extBtn;
+    private javax.swing.JCheckBox eyeBox;
     private javax.swing.JLabel iconUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -340,7 +363,7 @@ public class loginFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JTextField passField;
+    private javax.swing.JPasswordField passField;
     private javax.swing.JButton regBtn;
     private javax.swing.JButton resetBtn;
     private javax.swing.JTextField userField;

@@ -1,38 +1,54 @@
-package dekstop;
+package com.rozy.dailytracker;
 
+import com.rozy.dailytracker.dekstop.loginFrame;
 import static java.awt.image.ImageObserver.HEIGHT;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class main {
 
-    HashMap<String, String> userData = new HashMap<>();
-
+//    user data
+    
+    static HashMap<String, String> userLog = new HashMap<>();
+    
+    final static String userAdmin = "admin";
+    final static String passAdmin = "PremiumTicket";
+    
+//    login var
+    
     public void addUser(String user, String pass) {
-        if (userData.containsKey(user)) {
+        if (userLog.containsKey(user)) {
             JOptionPane.showMessageDialog(null, "Username Sudah Diambil",
                     "Daily Tracker", HEIGHT);
         } else {
-            userData.put(user, pass);
+            userLog.put(user, pass);
             JOptionPane.showMessageDialog(null, "Anda telah Membuat Akun",
                     "Daily Tracker", HEIGHT);
         }
-        System.out.println(userData);
+        System.out.println(userLog);
     }
 
     public void logUser(String user, String pass) {
-        String pw = userData.get(user);
-        if (userData.containsKey(user) && pass.equals(pw)) {
+        String pw = userLog.get(user);
+        if (userLog.containsKey(user) && pass.equals(pw)) {
             JOptionPane.showMessageDialog(null, "Anda Telah Login",
                     "Daily Tracker", HEIGHT);
+            if (user.equals(userAdmin) && pw.equals(passAdmin)) {
+                boolean isAdmin = true;
+                System.out.println("You're " + isAdmin + " Admin now!");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Password Anda Salah",
                     "Daily Tracker", HEIGHT);
         }
-        System.out.println(userData);
+        System.out.println(userLog);
     }
 
+//    run frame
+    
     public static void main(String[] args) {
+        userLog.put(userAdmin, passAdmin);
+        
         loginFrame loginFrame = new loginFrame();
         loginFrame.mainFrame();
     }

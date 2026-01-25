@@ -7,12 +7,17 @@ import javax.swing.JOptionPane;
 
 public class main {
 
-//    user data
+//    login data handler
     
     static HashMap<String, String> userLog = new HashMap<>();
     
     final static String userAdmin = "admin";
     final static String passAdmin = "PremiumTicket";
+    public static String userLogged = "";
+    
+//    userdata
+   
+    static HashMap<String, Integer> tab1 = new HashMap<>();
     
 //    login var
     
@@ -33,6 +38,7 @@ public class main {
         if (userLog.containsKey(user) && pass.equals(pw)) {
             JOptionPane.showMessageDialog(null, "Anda Telah Login",
                     "Daily Tracker", HEIGHT);
+            userLogged = user;
             if (user.equals(userAdmin) && pw.equals(passAdmin)) {
                 boolean isAdmin = true;
                 System.out.println("You're " + isAdmin + " Admin now!");
@@ -48,7 +54,6 @@ public class main {
     
     public static void main(String[] args) {
         userLog.put(userAdmin, passAdmin);
-        
         loginFrame loginFrame = new loginFrame();
         loginFrame.mainFrame();
     }

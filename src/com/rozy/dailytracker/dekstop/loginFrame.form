@@ -358,6 +358,9 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/rozy/dailytracker/images/view.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/rozy/dailytracker/images/eye.png"/>
                 </Property>
               </Properties>
@@ -371,7 +374,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/rozy/dailytracker/images/userIcon.png"/>
+              <Image iconType="3" name="/com/rozy/dailytracker/images/logIcon.png"/>
             </Property>
           </Properties>
           <AccessibilityProperties>

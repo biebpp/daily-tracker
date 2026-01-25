@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 public class loginFrame extends javax.swing.JFrame {
 
     main main = new main();
+    userFrame userFrame = new userFrame();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(loginFrame.class.getName());
 
@@ -138,7 +139,8 @@ public class loginFrame extends javax.swing.JFrame {
         resetBtn.addActionListener(this::resetBtnActionPerformed);
 
         eyeBox.setSelected(true);
-        eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/eye.png"))); // NOI18N
+        eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/view.png"))); // NOI18N
+        eyeBox.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/eye.png"))); // NOI18N
         eyeBox.addActionListener(this::eyeBoxActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -194,7 +196,7 @@ public class loginFrame extends javax.swing.JFrame {
         );
 
         iconUser.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/userIcon.png"))); // NOI18N
+        iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/logIcon.png"))); // NOI18N
 
         extBtn.setBackground(new java.awt.Color(175, 175, 175));
         extBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/close.png"))); // NOI18N
@@ -256,11 +258,12 @@ public class loginFrame extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if (!(userField.getText().equals("") || String.valueOf(passField.getPassword()).equals(""))) {
             main.logUser(userField.getText(), String.valueOf(passField.getPassword()));
+            userFrame.mainFrame();
+            dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
                     "Daily Tracker", HEIGHT);
         }
-
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
@@ -308,10 +311,8 @@ public class loginFrame extends javax.swing.JFrame {
 
     private void eyeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eyeBoxActionPerformed
         if (!eyeBox.isSelected()) {
-            eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/eye.png")));
             passField.setEchoChar((char)0);
         } else {
-            eyeBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/view.png")));
             passField.setEchoChar('*');
         }
     }//GEN-LAST:event_eyeBoxActionPerformed

@@ -8,19 +8,16 @@ import javax.swing.JOptionPane;
 public class main {
 
 //    login data handler
-    
     static HashMap<String, String> userLog = new HashMap<>();
     
+
     final static String userAdmin = "admin";
     final static String passAdmin = "PremiumTicket";
     public static String userLogged = "";
     
 //    userdata
-   
-    static HashMap<String, Integer> tab1 = new HashMap<>();
-    
+
 //    login var
-    
     public void addUser(String user, String pass) {
         if (userLog.containsKey(user)) {
             JOptionPane.showMessageDialog(null, "Username Sudah Diambil",
@@ -30,7 +27,9 @@ public class main {
             JOptionPane.showMessageDialog(null, "Anda telah Membuat Akun",
                     "Daily Tracker", HEIGHT);
         }
-        System.out.println(userLog);
+        if (user.equals("show") && pass.equals("SHOWMEPLS")) {
+            System.out.println("User List: " + userLog);
+        }
     }
 
     public void logUser(String user, String pass) {
@@ -47,11 +46,9 @@ public class main {
             JOptionPane.showMessageDialog(null, "Password Anda Salah",
                     "Daily Tracker", HEIGHT);
         }
-        System.out.println(userLog);
     }
 
 //    run frame
-    
     public static void main(String[] args) {
         userLog.put(userAdmin, passAdmin);
         loginFrame loginFrame = new loginFrame();

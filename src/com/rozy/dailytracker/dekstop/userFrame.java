@@ -2,13 +2,19 @@ package com.rozy.dailytracker.dekstop;
 
 import com.rozy.dailytracker.main;
 import static java.awt.image.ImageObserver.HEIGHT;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class userFrame extends javax.swing.JFrame {
 
     main main = new main();
+    LocalDate currentDate = LocalDate.now();
 
     String[] yesNo = {"Tidak", "Ya"};
+    boolean clickedActivity = false;
+    boolean clickedDead = false;
+    boolean darkMode = false;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(userFrame.class.getName());
 
@@ -27,94 +33,168 @@ public class userFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        backPanel = new javax.swing.JPanel();
+        tabbedPanel = new javax.swing.JTabbedPane();
+        homePanel = new javax.swing.JPanel();
+        goalPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        goalTable = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        goalTable = new javax.swing.JTable() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // All cells are read-only
+            }
+        };
+        addTBtn = new javax.swing.JButton();
+        activityField = new javax.swing.JTextField();
+        activityLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        dateField = new javax.swing.JTextField();
+        userPanel = new javax.swing.JPanel();
         icon = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
+        userLabel = new javax.swing.JLabel();
         outBtn = new javax.swing.JButton();
+        themeIcon = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(200, 200, 200));
+        backPanel.setBackground(new java.awt.Color(200, 200, 200));
 
-        jTabbedPane1.setBackground(new java.awt.Color(175, 175, 175));
-        jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
-        jTabbedPane1.setAutoscrolls(true);
-        jTabbedPane1.setFont(new java.awt.Font("JetBrainsMonoNL NFP SemiBold", 0, 30)); // NOI18N
-        jTabbedPane1.setInheritsPopupMenu(true);
+        tabbedPanel.setBackground(new java.awt.Color(175, 175, 175));
+        tabbedPanel.setForeground(new java.awt.Color(0, 0, 0));
+        tabbedPanel.setAutoscrolls(true);
+        tabbedPanel.setFont(new java.awt.Font("JetBrainsMonoNL NFP SemiBold", 0, 30)); // NOI18N
+        tabbedPanel.setInheritsPopupMenu(true);
 
-        jPanel3.setBackground(new java.awt.Color(175, 175, 175));
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel3.setForeground(new java.awt.Color(0, 0, 0));
+        homePanel.setBackground(new java.awt.Color(175, 175, 175));
+        homePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        homePanel.setForeground(new java.awt.Color(0, 0, 0));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 992, Short.MAX_VALUE)
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 995, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 523, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("HOME", jPanel3);
+        tabbedPanel.addTab("HOME", homePanel);
 
-        jPanel4.setBackground(new java.awt.Color(175, 175, 175));
-        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        goalPanel.setBackground(new java.awt.Color(175, 175, 175));
+        goalPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         goalTable.setAutoCreateRowSorter(true);
         goalTable.setBackground(new java.awt.Color(125, 125, 125));
         goalTable.setForeground(new java.awt.Color(0, 0, 0));
         goalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null}
+
             },
             new String [] {
-                "Title 1"
+                "No", "Activity", "Created", "Deadline"
             }
         ));
+        goalTable.setGridColor(new java.awt.Color(100, 100, 100));
         goalTable.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(goalTable);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(153, Short.MAX_VALUE))
+        addTBtn.setBackground(new java.awt.Color(150, 150, 150));
+        addTBtn.setFont(new java.awt.Font("JetBrainsMonoNL NFM Medium", 0, 18)); // NOI18N
+        addTBtn.setForeground(new java.awt.Color(0, 0, 0));
+        addTBtn.setText("ADD");
+        addTBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        addTBtn.addActionListener(this::addTBtnActionPerformed);
+
+        activityField.setBackground(new java.awt.Color(200, 200, 200));
+        activityField.setForeground(new java.awt.Color(0, 0, 0));
+        activityField.setText("Masukkan Nama Aktifitas...");
+        activityField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        activityField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                activityFieldMouseClicked(evt);
+            }
+        });
+
+        activityLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP ExtraBold", 0, 14)); // NOI18N
+        activityLabel.setForeground(new java.awt.Color(0, 0, 0));
+        activityLabel.setText("Activity Name");
+
+        dateLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP ExtraBold", 0, 14)); // NOI18N
+        dateLabel.setForeground(new java.awt.Color(0, 0, 0));
+        dateLabel.setText("Deadline");
+
+        dateField.setBackground(new java.awt.Color(200, 200, 200));
+        dateField.setForeground(new java.awt.Color(0, 0, 0));
+        dateField.setText("Masukkan Deadline...");
+        dateField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dateField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dateFieldMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout goalPanelLayout = new javax.swing.GroupLayout(goalPanel);
+        goalPanel.setLayout(goalPanelLayout);
+        goalPanelLayout.setHorizontalGroup(
+            goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(goalPanelLayout.createSequentialGroup()
+                .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(goalPanelLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dateLabel)
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(activityLabel)
+                                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        goalPanelLayout.setVerticalGroup(
+            goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(goalPanelLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
+                .addGap(114, 114, 114)
+                .addComponent(activityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dateLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
-        jTabbedPane1.addTab("GOAL", jPanel4);
+        tabbedPanel.addTab("GOAL", goalPanel);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+        javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
+        backPanel.setLayout(backPanelLayout);
+        backPanelLayout.setHorizontalGroup(
+            backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 999, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+        backPanelLayout.setVerticalGroup(
+            backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backPanelLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(tabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(150, 150, 150));
+        userPanel.setBackground(new java.awt.Color(150, 150, 150));
 
         icon.setContentAreaFilled(false);
         if (main.userLogged.equals("admin")) {
@@ -124,9 +204,10 @@ public class userFrame extends javax.swing.JFrame {
         }
         icon.addActionListener(this::iconActionPerformed);
 
-        jLabel1.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(main.userLogged);
+        userLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
+        userLabel.setForeground(new java.awt.Color(0, 0, 0));
+        userLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userLabel.setText(main.userLogged);
 
         outBtn.setBackground(new java.awt.Color(255, 255, 255));
         outBtn.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
@@ -135,31 +216,41 @@ public class userFrame extends javax.swing.JFrame {
         outBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         outBtn.addActionListener(this::outBtnActionPerformed);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+        themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/sun.png"))); // NOI18N
+        themeIcon.addActionListener(this::themeIconActionPerformed);
+
+        javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
+        userPanel.setLayout(userPanelLayout);
+        userPanelLayout.setHorizontalGroup(
+            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanelLayout.createSequentialGroup()
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(userPanelLayout.createSequentialGroup()
+                        .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(userPanelLayout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(userPanelLayout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(outBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 134, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(outBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+            .addGroup(userPanelLayout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(themeIcon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        userPanelLayout.setVerticalGroup(
+            userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanelLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(userLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                .addComponent(themeIcon)
+                .addGap(18, 18, 18)
                 .addComponent(outBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -170,15 +261,15 @@ public class userFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -200,6 +291,109 @@ public class userFrame extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_outBtnActionPerformed
+
+    private void addTBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
+        model.addRow(new Object[]{
+            (goalTable.getRowCount()), (activityField.getText()),
+            (currentDate), (dateField.getText())
+        });
+        activityField.setText("Masukkan Nama Aktifitas...");
+        clickedActivity = false;
+        dateField.setText("Masukkan Deadline...");
+        clickedDead = false;
+    }//GEN-LAST:event_addTBtnActionPerformed
+
+    private void activityFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityFieldMouseClicked
+        if (!clickedActivity) {
+            activityField.setText("");
+        } else {
+        }
+        clickedActivity = true;
+    }//GEN-LAST:event_activityFieldMouseClicked
+
+    private void dateFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateFieldMouseClicked
+        if (!clickedDead) {
+            dateField.setText("");
+        } else {
+        }
+        clickedDead = true;
+    }//GEN-LAST:event_dateFieldMouseClicked
+
+    private void themeIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeIconActionPerformed
+        if (darkMode) {
+
+            darkMode = false;
+
+            themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/moon.png")));
+
+            goalTable.setBackground(new java.awt.Color(25, 25, 25));
+            goalTable.setForeground(new java.awt.Color(255, 255, 255));
+
+            goalPanel.setBackground(new java.awt.Color(75, 75, 75));
+
+            userPanel.setBackground(new java.awt.Color(50, 50, 50));
+
+            tabbedPanel.setBackground(new java.awt.Color(75, 75, 175));
+            tabbedPanel.setForeground(new java.awt.Color(255, 255, 255));
+
+            homePanel.setBackground(new java.awt.Color(75, 75, 75));
+            backPanel.setBackground(new java.awt.Color(100, 100, 100));
+
+            activityField.setBackground(new java.awt.Color(100, 100, 100));
+            activityField.setForeground(new java.awt.Color(255, 255, 255));
+
+            dateField.setBackground(new java.awt.Color(100, 100, 100));
+            dateField.setForeground(new java.awt.Color(255, 255, 255));
+
+            userLabel.setForeground(new java.awt.Color(255, 255, 255));
+            activityLabel.setForeground(new java.awt.Color(255, 255, 255));
+            dateLabel.setForeground(new java.awt.Color(255, 255, 255));
+
+            outBtn.setBackground(new java.awt.Color(0, 0, 0));
+            outBtn.setForeground(new java.awt.Color(255, 255, 255));
+            
+            addTBtn.setBackground(new java.awt.Color(50, 50, 50));
+            addTBtn.setForeground(new java.awt.Color(255, 255, 255));
+        } else {
+
+            darkMode = true;
+
+            themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/sun.png")));
+
+            goalTable.setBackground(new java.awt.Color(125, 125, 125));
+            goalTable.setForeground(new java.awt.Color(0, 0, 0));
+            goalTable.setGridColor(new java.awt.Color(100, 100, 100));
+
+            goalPanel.setBackground(new java.awt.Color(175, 175, 175));
+
+            userPanel.setBackground(new java.awt.Color(150, 150, 150));
+
+            tabbedPanel.setBackground(new java.awt.Color(175, 175, 175));
+            tabbedPanel.setForeground(new java.awt.Color(0, 0, 0));
+
+            homePanel.setBackground(new java.awt.Color(175, 175, 175));
+            backPanel.setBackground(new java.awt.Color(200, 200, 200));
+
+            activityField.setBackground(new java.awt.Color(200, 200, 200));
+            activityField.setForeground(new java.awt.Color(0, 0, 0));
+
+            dateField.setBackground(new java.awt.Color(200, 200, 200));
+            dateField.setForeground(new java.awt.Color(0, 0, 0));
+
+            userLabel.setForeground(new java.awt.Color(0, 0, 0));
+            activityLabel.setForeground(new java.awt.Color(0, 0, 0));
+            dateLabel.setForeground(new java.awt.Color(0, 0, 0));
+
+            outBtn.setBackground(new java.awt.Color(255, 255, 255));
+            outBtn.setForeground(new java.awt.Color(0, 0, 0));
+
+            addTBtn.setBackground(new java.awt.Color(150, 150, 150));
+            addTBtn.setForeground(new java.awt.Color(0, 0, 0));
+        }
+
+
+    }//GEN-LAST:event_themeIconActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,15 +423,21 @@ public class userFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField activityField;
+    private javax.swing.JLabel activityLabel;
+    private javax.swing.JButton addTBtn;
+    private javax.swing.JPanel backPanel;
+    private javax.swing.JTextField dateField;
+    private javax.swing.JLabel dateLabel;
+    private javax.swing.JPanel goalPanel;
     private javax.swing.JTable goalTable;
+    private javax.swing.JPanel homePanel;
     private javax.swing.JCheckBox icon;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton outBtn;
+    private javax.swing.JTabbedPane tabbedPanel;
+    private javax.swing.JCheckBox themeIcon;
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 }

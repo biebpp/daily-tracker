@@ -3,6 +3,9 @@ package com.rozy.dailytracker.dekstop;
 import com.rozy.dailytracker.main;
 import static java.awt.image.ImageObserver.HEIGHT;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,7 +15,10 @@ public class userFrame extends javax.swing.JFrame {
     LocalDate currentDate = LocalDate.now();
 
     String[] yesNo = {"Tidak", "Ya"};
+    String currentTime = "";
+    int hour = 0, minute = 0, second = 0;
     boolean clickedActivity = false;
+    boolean clickedIndex = false;
     boolean clickedDead = false;
     boolean darkMode = false;
 
@@ -36,6 +42,8 @@ public class userFrame extends javax.swing.JFrame {
         backPanel = new javax.swing.JPanel();
         tabbedPanel = new javax.swing.JTabbedPane();
         homePanel = new javax.swing.JPanel();
+        timeLabel = new javax.swing.JLabel();
+        sessionLabel = new javax.swing.JLabel();
         goalPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         goalTable = new javax.swing.JTable() {
@@ -49,6 +57,9 @@ public class userFrame extends javax.swing.JFrame {
         activityLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         dateField = new javax.swing.JTextField();
+        indexField = new javax.swing.JTextField();
+        rmBtn = new javax.swing.JButton();
+        updBtn = new javax.swing.JButton();
         userPanel = new javax.swing.JPanel();
         icon = new javax.swing.JCheckBox();
         userLabel = new javax.swing.JLabel();
@@ -69,15 +80,78 @@ public class userFrame extends javax.swing.JFrame {
         homePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         homePanel.setForeground(new java.awt.Color(0, 0, 0));
 
+        timeLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
+        timeLabel.setForeground(new java.awt.Color(0, 0, 0));
+        timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        timeLabel.setText(currentTime);
+        Timer timerDate = new Timer();
+        TimerTask taskDate = new TimerTask() {
+            @Override
+            public void run() {
+                LocalDateTime getcurrentTime = LocalDateTime.now();
+
+                String hour = String.valueOf(getcurrentTime.getHour());
+                String minute = String.valueOf(getcurrentTime.getMinute());
+                String second = String.valueOf(getcurrentTime.getSecond());
+
+                String showHour = hour;
+                String showMinute = minute;
+                String showSecond = second;
+
+                if(Integer.parseInt(hour)>10) {showHour = hour;} else {showHour = "0" + hour;}
+                if(Integer.parseInt(minute)>10) {showMinute = minute;} else {showMinute = "0" + minute;}
+                if(Integer.parseInt(second)>10) {showSecond = second;} else {showSecond = "0" + second;}
+
+                currentTime = ("Current Time: " + showHour + ":" + showMinute + ":" + showSecond);
+                timeLabel.setText(currentTime);
+            }
+        };
+        timerDate.schedule(taskDate, 0, 1000);
+
+        sessionLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
+        sessionLabel.setForeground(new java.awt.Color(0, 0, 0));
+        sessionLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        sessionLabel.setText(currentTime);
+        Timer timerSession = new Timer();
+        TimerTask taskSession = new TimerTask() {
+            @Override
+            public void run() {
+                second++;
+                if(second>=60){minute++;}if(minute>=60){hour++;}
+
+                String showSecond = String.valueOf(second);
+                String showMinute = String.valueOf(minute);
+                String showHour = String.valueOf(hour);
+
+                if(second>=10){showSecond = String.valueOf(second);} else {showSecond = "0" + String.valueOf(second);}
+                if(minute>=10){showMinute = String.valueOf(minute);} else {showMinute = "0" + String.valueOf(minute);}
+                if(hour>=10){showHour = String.valueOf(hour);} else {showHour = "0" + String.valueOf(hour);}
+
+                currentTime = ("Session Time: " + showHour + ":" + showMinute + ":" + showSecond);
+                sessionLabel.setText(currentTime);
+            }
+        };
+        timerSession.schedule(taskSession, 0, 1000);
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 995, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timeLabel)
+                    .addComponent(sessionLabel))
+                .addContainerGap(763, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(timeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sessionLabel)
+                .addContainerGap(358, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("HOME", homePanel);
@@ -135,26 +209,59 @@ public class userFrame extends javax.swing.JFrame {
             }
         });
 
+        indexField.setBackground(new java.awt.Color(200, 200, 200));
+        indexField.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 12)); // NOI18N
+        indexField.setForeground(new java.awt.Color(0, 0, 0));
+        indexField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        indexField.setText("...");
+        indexField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        indexField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                indexFieldMouseClicked(evt);
+            }
+        });
+
+        rmBtn.setBackground(new java.awt.Color(150, 150, 150));
+        rmBtn.setForeground(new java.awt.Color(0, 0, 0));
+        rmBtn.setText("RM");
+        rmBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        rmBtn.addActionListener(this::rmBtnActionPerformed);
+
+        updBtn.setBackground(new java.awt.Color(150, 150, 150));
+        updBtn.setForeground(new java.awt.Color(0, 0, 0));
+        updBtn.setText("UPD");
+        updBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        updBtn.addActionListener(this::updBtnActionPerformed);
+
         javax.swing.GroupLayout goalPanelLayout = new javax.swing.GroupLayout(goalPanel);
         goalPanel.setLayout(goalPanelLayout);
         goalPanelLayout.setHorizontalGroup(
             goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(goalPanelLayout.createSequentialGroup()
                 .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(goalPanelLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(dateLabel)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(goalPanelLayout.createSequentialGroup()
+                                    .addComponent(indexField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(2, 2, 2)
+                                    .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(activityLabel)
                                 .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)))
+                        .addGap(18, 18, 18))
+                    .addGroup(goalPanelLayout.createSequentialGroup()
+                        .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(goalPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(44, 44, 44)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(156, Short.MAX_VALUE))
         );
@@ -174,6 +281,11 @@ public class userFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(indexField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -184,7 +296,7 @@ public class userFrame extends javax.swing.JFrame {
         backPanel.setLayout(backPanelLayout);
         backPanelLayout.setHorizontalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 999, Short.MAX_VALUE)
+            .addComponent(tabbedPanel)
         );
         backPanelLayout.setVerticalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,14 +406,22 @@ public class userFrame extends javax.swing.JFrame {
 
     private void addTBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTBtnActionPerformed
         DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
-        model.addRow(new Object[]{
-            (goalTable.getRowCount()), (activityField.getText()),
-            (currentDate), (dateField.getText())
-        });
-        activityField.setText("Masukkan Nama Aktifitas...");
-        clickedActivity = false;
-        dateField.setText("Masukkan Deadline...");
-        clickedDead = false;
+        if (activityField.getText().equals("Masukkan Nama Aktifitas...") || dateField.getText().equals("Masukkan Deadline...")
+                || activityField.getText().equals("") || dateField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Harap Masukkan Target",
+                    "Daily Tracker", HEIGHT);
+        } else {
+            model.addRow(new Object[]{
+                (goalTable.getRowCount()), (activityField.getText()),
+                (currentDate), (dateField.getText())
+            });
+            activityField.setText("Masukkan Nama Aktifitas...");
+            dateField.setText("Masukkan Deadline...");
+            clickedActivity = false;
+            clickedDead = false;
+            JOptionPane.showMessageDialog(null, "Target Telah Ditambahkan",
+                    "Daily Tracker", HEIGHT);
+        }
     }//GEN-LAST:event_addTBtnActionPerformed
 
     private void activityFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityFieldMouseClicked
@@ -352,7 +472,7 @@ public class userFrame extends javax.swing.JFrame {
 
             outBtn.setBackground(new java.awt.Color(0, 0, 0));
             outBtn.setForeground(new java.awt.Color(255, 255, 255));
-            
+
             addTBtn.setBackground(new java.awt.Color(50, 50, 50));
             addTBtn.setForeground(new java.awt.Color(255, 255, 255));
         } else {
@@ -395,6 +515,56 @@ public class userFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_themeIconActionPerformed
 
+    private void indexFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_indexFieldMouseClicked
+        if (!clickedIndex) {
+            indexField.setText("");
+        } else {
+        }
+        clickedIndex = true;
+    }//GEN-LAST:event_indexFieldMouseClicked
+
+    private void rmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
+        try {
+            int row = Integer.parseInt(indexField.getText());
+            if (goalTable.isEditing()) {
+                goalTable.getCellEditor().stopCellEditing();
+            }
+            model.removeRow(row);
+            JOptionPane.showMessageDialog(null, "Target Telah Terhapus",
+                    "Daily Tracker", HEIGHT);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Index Tidak Tersedia",
+                    "Daily Tracker", HEIGHT);
+        }
+
+    }//GEN-LAST:event_rmBtnActionPerformed
+
+    private void updBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
+        try {
+            int row = Integer.parseInt(indexField.getText());
+            if (activityField.getText().equals("Masukkan Nama Aktifitas...") || dateField.getText().equals("Masukkan Deadline...")
+                    || activityField.getText().equals("") || dateField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Harap Masukkan Target",
+                        "Daily Tracker", HEIGHT);
+            } else {
+                model.setValueAt(activityField.getText(), row, 1);
+                model.setValueAt(dateField.getText(), row, 3);
+                JOptionPane.showMessageDialog(null, "Target Telah Diperbarui",
+                        "Daily Tracker", HEIGHT);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Index Tidak Tersedia",
+                    "Daily Tracker", HEIGHT);
+        }
+        activityField.setText("Masukkan Nama Aktifitas...");
+        dateField.setText("Masukkan Deadline...");
+        clickedActivity = false;
+        clickedDead = false;
+
+    }//GEN-LAST:event_updBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,10 +603,15 @@ public class userFrame extends javax.swing.JFrame {
     private javax.swing.JTable goalTable;
     private javax.swing.JPanel homePanel;
     private javax.swing.JCheckBox icon;
+    private javax.swing.JTextField indexField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton outBtn;
+    private javax.swing.JButton rmBtn;
+    private javax.swing.JLabel sessionLabel;
     private javax.swing.JTabbedPane tabbedPanel;
     private javax.swing.JCheckBox themeIcon;
+    private javax.swing.JLabel timeLabel;
+    private javax.swing.JButton updBtn;
     private javax.swing.JLabel userLabel;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables

@@ -254,12 +254,15 @@ public class loginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 //    log and regist
-    
+
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if (!(userField.getText().equals("") || String.valueOf(passField.getPassword()).equals(""))) {
             main.logUser(userField.getText(), String.valueOf(passField.getPassword()));
-            userFrame.mainFrame();
-            dispose();
+            if (main.getsuccesLog()) {
+                userFrame.mainFrame();
+                main.setsuccesLog(false);
+                dispose();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
                     "Daily Tracker", HEIGHT);
@@ -284,7 +287,7 @@ public class loginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_regBtnActionPerformed
 
 //    user-related function
-    
+
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         userField.setText("");
         passField.setText("");
@@ -310,8 +313,8 @@ public class loginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_extBtnActionPerformed
 
     private void eyeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eyeBoxActionPerformed
-        if (!eyeBox.isSelected()) {
-            passField.setEchoChar((char)0);
+        if (eyeBox.isSelected()) {
+            passField.setEchoChar((char) 0);
         } else {
             passField.setEchoChar('*');
         }
@@ -321,6 +324,7 @@ public class loginFrame extends javax.swing.JFrame {
         if (!clickedPass) {
             passField.setText("");
             eyeBox.setSelected(false);
+            passField.setEchoChar('*');
         } else {
         }
         clickedPass = true;

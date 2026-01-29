@@ -465,16 +465,27 @@ public class userFrame extends javax.swing.JFrame {
 
             dateField.setBackground(new java.awt.Color(100, 100, 100));
             dateField.setForeground(new java.awt.Color(255, 255, 255));
+            
+            indexField.setBackground(new java.awt.Color(100, 100, 100));
+            indexField.setForeground(new java.awt.Color(255, 255, 255));
 
             userLabel.setForeground(new java.awt.Color(255, 255, 255));
             activityLabel.setForeground(new java.awt.Color(255, 255, 255));
             dateLabel.setForeground(new java.awt.Color(255, 255, 255));
+            timeLabel.setForeground(new java.awt.Color(255, 255, 255));
+            sessionLabel.setForeground(new java.awt.Color(255, 255, 255));
 
             outBtn.setBackground(new java.awt.Color(0, 0, 0));
             outBtn.setForeground(new java.awt.Color(255, 255, 255));
 
             addTBtn.setBackground(new java.awt.Color(50, 50, 50));
             addTBtn.setForeground(new java.awt.Color(255, 255, 255));
+
+            updBtn.setBackground(new java.awt.Color(50, 50, 50));
+            updBtn.setForeground(new java.awt.Color(255, 255, 255));
+
+            rmBtn.setBackground(new java.awt.Color(50, 50, 50));
+            rmBtn.setForeground(new java.awt.Color(255, 255, 255));
         } else {
 
             darkMode = true;
@@ -501,15 +512,26 @@ public class userFrame extends javax.swing.JFrame {
             dateField.setBackground(new java.awt.Color(200, 200, 200));
             dateField.setForeground(new java.awt.Color(0, 0, 0));
 
+            indexField.setBackground(new java.awt.Color(200, 200, 200));
+            indexField.setForeground(new java.awt.Color(0, 0, 0));
+
             userLabel.setForeground(new java.awt.Color(0, 0, 0));
             activityLabel.setForeground(new java.awt.Color(0, 0, 0));
             dateLabel.setForeground(new java.awt.Color(0, 0, 0));
+            sessionLabel.setForeground(new java.awt.Color(0, 0, 0));
+            timeLabel.setForeground(new java.awt.Color(0, 0, 0));
 
             outBtn.setBackground(new java.awt.Color(255, 255, 255));
             outBtn.setForeground(new java.awt.Color(0, 0, 0));
 
             addTBtn.setBackground(new java.awt.Color(150, 150, 150));
             addTBtn.setForeground(new java.awt.Color(0, 0, 0));
+
+            updBtn.setBackground(new java.awt.Color(150, 150, 150));
+            updBtn.setForeground(new java.awt.Color(0, 0, 0));
+
+            rmBtn.setBackground(new java.awt.Color(150, 150, 150));
+            rmBtn.setForeground(new java.awt.Color(0, 0, 0));
         }
 
 

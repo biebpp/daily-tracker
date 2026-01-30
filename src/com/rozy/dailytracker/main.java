@@ -17,6 +17,7 @@ public class main {
     private static boolean succesLog = false;
 
 //    userdata
+    
 //    login var
     public void addUser(String user, String pass) {
         if (userLog.containsKey(user)) {

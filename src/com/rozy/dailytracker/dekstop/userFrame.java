@@ -4,10 +4,13 @@ import com.rozy.dailytracker.main;
 import static java.awt.image.ImageObserver.HEIGHT;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class userFrame extends javax.swing.JFrame {
 
@@ -42,6 +45,7 @@ public class userFrame extends javax.swing.JFrame {
         backPanel = new javax.swing.JPanel();
         tabbedPanel = new javax.swing.JTabbedPane();
         homePanel = new javax.swing.JPanel();
+        homePanel1 = new javax.swing.JPanel();
         timeLabel = new javax.swing.JLabel();
         sessionLabel = new javax.swing.JLabel();
         goalPanel = new javax.swing.JPanel();
@@ -60,11 +64,13 @@ public class userFrame extends javax.swing.JFrame {
         indexField = new javax.swing.JTextField();
         rmBtn = new javax.swing.JButton();
         updBtn = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
         userPanel = new javax.swing.JPanel();
         icon = new javax.swing.JCheckBox();
         userLabel = new javax.swing.JLabel();
         outBtn = new javax.swing.JButton();
         themeIcon = new javax.swing.JCheckBox();
+        reloadBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,6 +85,9 @@ public class userFrame extends javax.swing.JFrame {
         homePanel.setBackground(new java.awt.Color(175, 175, 175));
         homePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         homePanel.setForeground(new java.awt.Color(0, 0, 0));
+
+        homePanel1.setBackground(new java.awt.Color(190, 190, 190));
+        homePanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 150, 150), 2, true));
 
         timeLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
         timeLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -133,25 +142,42 @@ public class userFrame extends javax.swing.JFrame {
         };
         timerSession.schedule(taskSession, 0, 1000);
 
+        javax.swing.GroupLayout homePanel1Layout = new javax.swing.GroupLayout(homePanel1);
+        homePanel1.setLayout(homePanel1Layout);
+        homePanel1Layout.setHorizontalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timeLabel)
+                    .addComponent(sessionLabel))
+                .addContainerGap(819, Short.MAX_VALUE))
+        );
+        homePanel1Layout.setVerticalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sessionLabel)
+                .addContainerGap(423, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanelLayout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(timeLabel)
-                    .addComponent(sessionLabel))
-                .addContainerGap(763, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(homePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanelLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(timeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sessionLabel)
-                .addContainerGap(358, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(homePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPanel.addTab("HOME", homePanel);
@@ -160,7 +186,7 @@ public class userFrame extends javax.swing.JFrame {
         goalPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         goalTable.setAutoCreateRowSorter(true);
-        goalTable.setBackground(new java.awt.Color(125, 125, 125));
+        goalTable.setBackground(new java.awt.Color(155, 155, 155));
         goalTable.setForeground(new java.awt.Color(0, 0, 0));
         goalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,7 +196,7 @@ public class userFrame extends javax.swing.JFrame {
                 "No", "Activity", "Created", "Deadline"
             }
         ));
-        goalTable.setGridColor(new java.awt.Color(100, 100, 100));
+        goalTable.setGridColor(new java.awt.Color(200, 200, 200));
         goalTable.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(goalTable);
 
@@ -182,6 +208,7 @@ public class userFrame extends javax.swing.JFrame {
         addTBtn.addActionListener(this::addTBtnActionPerformed);
 
         activityField.setBackground(new java.awt.Color(200, 200, 200));
+        activityField.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 13)); // NOI18N
         activityField.setForeground(new java.awt.Color(0, 0, 0));
         activityField.setText("Masukkan Nama Aktifitas...");
         activityField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -200,6 +227,7 @@ public class userFrame extends javax.swing.JFrame {
         dateLabel.setText("Deadline");
 
         dateField.setBackground(new java.awt.Color(200, 200, 200));
+        dateField.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 13)); // NOI18N
         dateField.setForeground(new java.awt.Color(0, 0, 0));
         dateField.setText("Masukkan Deadline...");
         dateField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -233,53 +261,66 @@ public class userFrame extends javax.swing.JFrame {
         updBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         updBtn.addActionListener(this::updBtnActionPerformed);
 
+        searchField.setBackground(new java.awt.Color(150, 150, 150));
+        searchField.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 16)); // NOI18N
+        searchField.setForeground(new java.awt.Color(0, 0, 0));
+        searchField.setText("Search...");
+        searchField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchFieldMouseClicked(evt);
+            }
+        });
+        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchFieldKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout goalPanelLayout = new javax.swing.GroupLayout(goalPanel);
         goalPanel.setLayout(goalPanelLayout);
         goalPanelLayout.setHorizontalGroup(
             goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(goalPanelLayout.createSequentialGroup()
-                .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(38, 38, 38)
+                .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
                             .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(dateLabel)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(goalPanelLayout.createSequentialGroup()
                                     .addComponent(indexField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(activityLabel)
-                                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18))
-                    .addGroup(goalPanelLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(109, 109, 109))
+                        .addGroup(goalPanelLayout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createSequentialGroup()
                         .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(goalPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(44, 44, 44)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(activityLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchField)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         goalPanelLayout.setVerticalGroup(
             goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(goalPanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, goalPanelLayout.createSequentialGroup()
                 .addGap(114, 114, 114)
                 .addComponent(activityLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(activityField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,6 +329,12 @@ public class userFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
+            .addGroup(goalPanelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         tabbedPanel.addTab("GOAL", goalPanel);
@@ -314,7 +361,6 @@ public class userFrame extends javax.swing.JFrame {
         } else {
             icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/userIcon.png")));
         }
-        icon.addActionListener(this::iconActionPerformed);
 
         userLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
         userLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -330,6 +376,13 @@ public class userFrame extends javax.swing.JFrame {
 
         themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/sun.png"))); // NOI18N
         themeIcon.addActionListener(this::themeIconActionPerformed);
+
+        reloadBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/reload.png"))); // NOI18N
+        reloadBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reloadBoxMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout userPanelLayout = new javax.swing.GroupLayout(userPanel);
         userPanel.setLayout(userPanelLayout);
@@ -350,7 +403,9 @@ public class userFrame extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(userPanelLayout.createSequentialGroup()
                 .addGap(146, 146, 146)
-                .addComponent(themeIcon)
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(reloadBox)
+                    .addComponent(themeIcon))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
@@ -360,7 +415,9 @@ public class userFrame extends javax.swing.JFrame {
                 .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(reloadBox)
+                .addGap(18, 18, 18)
                 .addComponent(themeIcon)
                 .addGap(18, 18, 18)
                 .addComponent(outBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -387,9 +444,27 @@ public class userFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void iconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iconActionPerformed
-        // hehe
-    }//GEN-LAST:event_iconActionPerformed
+    private void loadHash() {
+        DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
+
+        String user = main.userLogged;
+
+        ArrayList<Object> list = (ArrayList<Object>) main.getTable().get(user);
+        try {
+            if (!(list.isEmpty() || list == null)) {
+                for (int i = 0; i < list.size(); i++) {
+                    Object[] obj = (Object[]) list.get(i);
+                    model.addRow(obj);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("hi");
+        }
+
+        System.out.println(main.getTable().get(main.userLogged));
+        System.out.println(main.getTable());
+
+    }
 
     private void outBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outBtnActionPerformed
         int yn = (JOptionPane.showOptionDialog(null, "Apakah Anda Yakin?", "Daily Tracker", 0,
@@ -411,10 +486,20 @@ public class userFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Harap Masukkan Target",
                     "Daily Tracker", HEIGHT);
         } else {
-            model.addRow(new Object[]{
-                (goalTable.getRowCount()), (activityField.getText()),
-                (currentDate), (dateField.getText())
-            });
+            String number = String.valueOf(goalTable.getRowCount());
+            String activity = activityField.getText();
+            String created = String.valueOf(currentDate);
+            String deadline = dateField.getText();
+
+            Object[] obj = new Object[]{
+                (number), (activity),
+                (created), (deadline)
+            };
+
+            System.out.println(obj);
+            main.addTable(obj);
+            model.addRow((Object[]) obj);
+
             activityField.setText("Masukkan Nama Aktifitas...");
             dateField.setText("Masukkan Deadline...");
             clickedActivity = false;
@@ -447,27 +532,29 @@ public class userFrame extends javax.swing.JFrame {
 
             themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/moon.png")));
 
-            goalTable.setBackground(new java.awt.Color(25, 25, 25));
-            goalTable.setForeground(new java.awt.Color(255, 255, 255));
+            goalTable.setBackground(new java.awt.Color(150, 150, 150));
+            goalTable.setForeground(new java.awt.Color(100, 100, 100));
+            goalTable.setGridColor(new java.awt.Color(100, 100, 100));
 
             goalPanel.setBackground(new java.awt.Color(75, 75, 75));
 
             userPanel.setBackground(new java.awt.Color(50, 50, 50));
 
             tabbedPanel.setBackground(new java.awt.Color(75, 75, 175));
-            tabbedPanel.setForeground(new java.awt.Color(255, 255, 255));
+            tabbedPanel.setForeground(new java.awt.Color(200, 200, 200));
 
             homePanel.setBackground(new java.awt.Color(75, 75, 75));
+            homePanel1.setBackground(new java.awt.Color(90, 90, 90));
             backPanel.setBackground(new java.awt.Color(100, 100, 100));
 
             activityField.setBackground(new java.awt.Color(100, 100, 100));
-            activityField.setForeground(new java.awt.Color(255, 255, 255));
+            activityField.setForeground(new java.awt.Color(190, 190, 190));
 
             dateField.setBackground(new java.awt.Color(100, 100, 100));
-            dateField.setForeground(new java.awt.Color(255, 255, 255));
-            
+            dateField.setForeground(new java.awt.Color(190, 190, 190));
+
             indexField.setBackground(new java.awt.Color(100, 100, 100));
-            indexField.setForeground(new java.awt.Color(255, 255, 255));
+            indexField.setForeground(new java.awt.Color(200, 200, 200));
 
             userLabel.setForeground(new java.awt.Color(255, 255, 255));
             activityLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -476,25 +563,28 @@ public class userFrame extends javax.swing.JFrame {
             sessionLabel.setForeground(new java.awt.Color(255, 255, 255));
 
             outBtn.setBackground(new java.awt.Color(0, 0, 0));
-            outBtn.setForeground(new java.awt.Color(255, 255, 255));
+            outBtn.setForeground(new java.awt.Color(250, 250, 250));
 
             addTBtn.setBackground(new java.awt.Color(50, 50, 50));
-            addTBtn.setForeground(new java.awt.Color(255, 255, 255));
+            addTBtn.setForeground(new java.awt.Color(250, 250, 250));
 
             updBtn.setBackground(new java.awt.Color(50, 50, 50));
-            updBtn.setForeground(new java.awt.Color(255, 255, 255));
+            updBtn.setForeground(new java.awt.Color(250, 250, 250));
 
             rmBtn.setBackground(new java.awt.Color(50, 50, 50));
-            rmBtn.setForeground(new java.awt.Color(255, 255, 255));
+            rmBtn.setForeground(new java.awt.Color(250, 250, 250));
+
+            searchField.setBackground(new java.awt.Color(50, 50, 50));
+            searchField.setForeground(new java.awt.Color(200, 200, 200));
         } else {
 
             darkMode = true;
 
             themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/sun.png")));
 
-            goalTable.setBackground(new java.awt.Color(125, 125, 125));
+            goalTable.setBackground(new java.awt.Color(155, 155, 155));
             goalTable.setForeground(new java.awt.Color(0, 0, 0));
-            goalTable.setGridColor(new java.awt.Color(100, 100, 100));
+            goalTable.setGridColor(new java.awt.Color(200, 200, 200));
 
             goalPanel.setBackground(new java.awt.Color(175, 175, 175));
 
@@ -505,6 +595,7 @@ public class userFrame extends javax.swing.JFrame {
 
             homePanel.setBackground(new java.awt.Color(175, 175, 175));
             backPanel.setBackground(new java.awt.Color(200, 200, 200));
+            homePanel1.setBackground(new java.awt.Color(190, 190, 190));
 
             activityField.setBackground(new java.awt.Color(200, 200, 200));
             activityField.setForeground(new java.awt.Color(0, 0, 0));
@@ -532,6 +623,9 @@ public class userFrame extends javax.swing.JFrame {
 
             rmBtn.setBackground(new java.awt.Color(150, 150, 150));
             rmBtn.setForeground(new java.awt.Color(0, 0, 0));
+
+            searchField.setBackground(new java.awt.Color(150, 150, 150));
+            searchField.setForeground(new java.awt.Color(0, 0, 0));
         }
 
 
@@ -584,8 +678,37 @@ public class userFrame extends javax.swing.JFrame {
         dateField.setText("Masukkan Deadline...");
         clickedActivity = false;
         clickedDead = false;
-
     }//GEN-LAST:event_updBtnActionPerformed
+
+    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
+        String checker = searchField.getText();
+        if (checker.equals("Search...")) {
+            searchField.setText("");
+        }
+    }//GEN-LAST:event_searchFieldMouseClicked
+
+    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
+        DefaultTableModel table = (DefaultTableModel) goalTable.getModel();
+        TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(table);
+        goalTable.setRowSorter(rowSorter);
+        rowSorter.setRowFilter(RowFilter.regexFilter(searchField.getText()));
+    }//GEN-LAST:event_searchFieldKeyReleased
+
+    private void reloadBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBoxMouseClicked
+        DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
+        ArrayList<Object> list = (ArrayList<Object>) main.getTable().get(main.userLogged);
+        model.setRowCount(0);
+        try {
+            if (!(list.isEmpty() || list == null)) {
+                for (int i = 0; i < list.size(); i++) {
+                    Object[] obj = (Object[]) list.get(i);
+                    model.addRow(obj);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("hi");
+        }
+    }//GEN-LAST:event_reloadBoxMouseClicked
 
     /**
      * @param args the command line arguments
@@ -612,6 +735,7 @@ public class userFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new userFrame().setVisible(true));
         JOptionPane.showMessageDialog(null, "Selamat Datang! " + main.userLogged,
                 "Daily Tracker", HEIGHT);
+        loadHash();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -624,11 +748,14 @@ public class userFrame extends javax.swing.JFrame {
     private javax.swing.JPanel goalPanel;
     private javax.swing.JTable goalTable;
     private javax.swing.JPanel homePanel;
+    private javax.swing.JPanel homePanel1;
     private javax.swing.JCheckBox icon;
     private javax.swing.JTextField indexField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton outBtn;
+    private javax.swing.JCheckBox reloadBox;
     private javax.swing.JButton rmBtn;
+    private javax.swing.JTextField searchField;
     private javax.swing.JLabel sessionLabel;
     private javax.swing.JTabbedPane tabbedPanel;
     private javax.swing.JCheckBox themeIcon;

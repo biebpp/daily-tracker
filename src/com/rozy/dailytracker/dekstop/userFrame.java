@@ -1,10 +1,16 @@
 package com.rozy.dailytracker.dekstop;
 
 import com.rozy.dailytracker.main;
+import com.rozy.dailytracker.management.writeHandler;
 import static java.awt.image.ImageObserver.HEIGHT;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
@@ -16,9 +22,11 @@ public class userFrame extends javax.swing.JFrame {
 
     main main = new main();
     LocalDate currentDate = LocalDate.now();
+    writeHandler writeHandler = new writeHandler();
 
     String[] yesNo = {"Tidak", "Ya"};
     String currentTime = "";
+
     int hour = 0, minute = 0, second = 0;
     boolean clickedActivity = false;
     boolean clickedIndex = false;
@@ -31,6 +39,7 @@ public class userFrame extends javax.swing.JFrame {
         initComponents();
         setSize(1280, 640);
         setResizable(false);
+        loadTable();
     }
 
     /**
@@ -48,6 +57,7 @@ public class userFrame extends javax.swing.JFrame {
         homePanel1 = new javax.swing.JPanel();
         timeLabel = new javax.swing.JLabel();
         sessionLabel = new javax.swing.JLabel();
+        countLabel = new javax.swing.JLabel();
         goalPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         goalTable = new javax.swing.JTable() {
@@ -65,6 +75,7 @@ public class userFrame extends javax.swing.JFrame {
         rmBtn = new javax.swing.JButton();
         updBtn = new javax.swing.JButton();
         searchField = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
         userPanel = new javax.swing.JPanel();
         icon = new javax.swing.JCheckBox();
         userLabel = new javax.swing.JLabel();
@@ -142,6 +153,11 @@ public class userFrame extends javax.swing.JFrame {
         };
         timerSession.schedule(taskSession, 0, 1000);
 
+        countLabel.setFont(new java.awt.Font("JetBrainsMonoNL NFP Medium", 0, 24)); // NOI18N
+        countLabel.setForeground(new java.awt.Color(0, 0, 0));
+        countLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        countLabel.setText("");
+
         javax.swing.GroupLayout homePanel1Layout = new javax.swing.GroupLayout(homePanel1);
         homePanel1.setLayout(homePanel1Layout);
         homePanel1Layout.setHorizontalGroup(
@@ -150,7 +166,8 @@ public class userFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(timeLabel)
-                    .addComponent(sessionLabel))
+                    .addComponent(sessionLabel)
+                    .addComponent(countLabel))
                 .addContainerGap(819, Short.MAX_VALUE))
         );
         homePanel1Layout.setVerticalGroup(
@@ -160,7 +177,9 @@ public class userFrame extends javax.swing.JFrame {
                 .addComponent(timeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(sessionLabel)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(countLabel)
+                .addContainerGap(378, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
@@ -276,6 +295,12 @@ public class userFrame extends javax.swing.JFrame {
             }
         });
 
+        saveBtn.setBackground(new java.awt.Color(150, 150, 150));
+        saveBtn.setForeground(new java.awt.Color(0, 0, 0));
+        saveBtn.setText("SAVE");
+        saveBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        saveBtn.addActionListener(this::saveBtnActionPerformed);
+
         javax.swing.GroupLayout goalPanelLayout = new javax.swing.GroupLayout(goalPanel);
         goalPanel.setLayout(goalPanelLayout);
         goalPanelLayout.setHorizontalGroup(
@@ -293,11 +318,16 @@ public class userFrame extends javax.swing.JFrame {
                                     .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(109, 109, 109))
                         .addGroup(goalPanelLayout.createSequentialGroup()
-                            .addGap(38, 38, 38)
-                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)))
+                            .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(goalPanelLayout.createSequentialGroup()
+                                    .addGap(38, 38, 38)
+                                    .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(addTBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(goalPanelLayout.createSequentialGroup()
+                                    .addGap(36, 36, 36)
+                                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createSequentialGroup()
                         .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -322,6 +352,8 @@ public class userFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(goalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(rmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,10 +434,10 @@ public class userFrame extends javax.swing.JFrame {
                         .addGap(0, 134, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(userPanelLayout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(reloadBox)
-                    .addComponent(themeIcon))
+                .addGap(93, 93, 93)
+                .addComponent(themeIcon)
+                .addGap(36, 36, 36)
+                .addComponent(reloadBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         userPanelLayout.setVerticalGroup(
@@ -416,9 +448,9 @@ public class userFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(reloadBox)
-                .addGap(18, 18, 18)
-                .addComponent(themeIcon)
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(themeIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(reloadBox, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(outBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -444,26 +476,26 @@ public class userFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadHash() {
+    private void loadTable() {
         DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
 
-        String user = main.userLogged;
+        String filePath = writeHandler.filePath;
+        File file = new File(filePath);
 
-        ArrayList<Object> list = (ArrayList<Object>) main.getTable().get(user);
         try {
-            if (!(list.isEmpty() || list == null)) {
-                for (int i = 0; i < list.size(); i++) {
-                    Object[] obj = (Object[]) list.get(i);
-                    model.addRow(obj);
-                }
+            FileReader reader = new FileReader(file);
+            BufferedReader buffered = new BufferedReader(reader);
+
+            Object[] lines = buffered.lines().toArray();
+
+            for (int i = 0; i < lines.length; i++) {
+                String[] row = lines[i].toString().split("///");
+                model.addRow(row);
             }
+            
+            countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
         } catch (Exception e) {
-            System.out.println("hi");
         }
-
-        System.out.println(main.getTable().get(main.userLogged));
-        System.out.println(main.getTable());
-
     }
 
     private void outBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outBtnActionPerformed
@@ -475,6 +507,24 @@ public class userFrame extends javax.swing.JFrame {
                     "Daily Tracker", HEIGHT);
             loginFrame loginFrame = new loginFrame();
             loginFrame.mainFrame();
+
+            String filePath = writeHandler.filePath;
+            File file = new File(filePath);
+            try {
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter buffered = new BufferedWriter(fw);
+
+                for (int i = 0; i < goalTable.getRowCount(); i++) {
+                    for (int j = 0; j < goalTable.getColumnCount(); j++) {
+                        buffered.write(goalTable.getValueAt(i, j).toString() + "///");
+                    }
+                    buffered.newLine();
+                }
+
+                buffered.close();
+                fw.close();
+            } catch (IOException e) {
+            }
             dispose();
         }
     }//GEN-LAST:event_outBtnActionPerformed
@@ -496,8 +546,6 @@ public class userFrame extends javax.swing.JFrame {
                 (created), (deadline)
             };
 
-            System.out.println(obj);
-            main.addTable(obj);
             model.addRow((Object[]) obj);
 
             activityField.setText("Masukkan Nama Aktifitas...");
@@ -507,6 +555,8 @@ public class userFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Target Telah Ditambahkan",
                     "Daily Tracker", HEIGHT);
         }
+        
+        countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
     }//GEN-LAST:event_addTBtnActionPerformed
 
     private void activityFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityFieldMouseClicked
@@ -533,7 +583,6 @@ public class userFrame extends javax.swing.JFrame {
             themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/moon.png")));
 
             goalTable.setBackground(new java.awt.Color(150, 150, 150));
-            goalTable.setForeground(new java.awt.Color(100, 100, 100));
             goalTable.setGridColor(new java.awt.Color(100, 100, 100));
 
             goalPanel.setBackground(new java.awt.Color(75, 75, 75));
@@ -548,10 +597,10 @@ public class userFrame extends javax.swing.JFrame {
             backPanel.setBackground(new java.awt.Color(100, 100, 100));
 
             activityField.setBackground(new java.awt.Color(100, 100, 100));
-            activityField.setForeground(new java.awt.Color(190, 190, 190));
+            activityField.setForeground(new java.awt.Color(225, 225, 225));
 
             dateField.setBackground(new java.awt.Color(100, 100, 100));
-            dateField.setForeground(new java.awt.Color(190, 190, 190));
+            dateField.setForeground(new java.awt.Color(225, 225, 225));
 
             indexField.setBackground(new java.awt.Color(100, 100, 100));
             indexField.setForeground(new java.awt.Color(200, 200, 200));
@@ -568,6 +617,9 @@ public class userFrame extends javax.swing.JFrame {
             addTBtn.setBackground(new java.awt.Color(50, 50, 50));
             addTBtn.setForeground(new java.awt.Color(250, 250, 250));
 
+            saveBtn.setBackground(new java.awt.Color(50, 50, 50));
+            saveBtn.setForeground(new java.awt.Color(250, 250, 250));
+
             updBtn.setBackground(new java.awt.Color(50, 50, 50));
             updBtn.setForeground(new java.awt.Color(250, 250, 250));
 
@@ -583,7 +635,6 @@ public class userFrame extends javax.swing.JFrame {
             themeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/rozy/dailytracker/images/sun.png")));
 
             goalTable.setBackground(new java.awt.Color(155, 155, 155));
-            goalTable.setForeground(new java.awt.Color(0, 0, 0));
             goalTable.setGridColor(new java.awt.Color(200, 200, 200));
 
             goalPanel.setBackground(new java.awt.Color(175, 175, 175));
@@ -618,6 +669,9 @@ public class userFrame extends javax.swing.JFrame {
             addTBtn.setBackground(new java.awt.Color(150, 150, 150));
             addTBtn.setForeground(new java.awt.Color(0, 0, 0));
 
+            saveBtn.setBackground(new java.awt.Color(150, 150, 150));
+            saveBtn.setForeground(new java.awt.Color(0, 0, 0));
+
             updBtn.setBackground(new java.awt.Color(150, 150, 150));
             updBtn.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -646,7 +700,12 @@ public class userFrame extends javax.swing.JFrame {
             if (goalTable.isEditing()) {
                 goalTable.getCellEditor().stopCellEditing();
             }
+
             model.removeRow(row);
+            for (int i = 0; i < goalTable.getRowCount(); i++) {
+                model.setValueAt(i, i, 0);
+            }
+
             JOptionPane.showMessageDialog(null, "Target Telah Terhapus",
                     "Daily Tracker", HEIGHT);
         } catch (Exception e) {
@@ -654,6 +713,8 @@ public class userFrame extends javax.swing.JFrame {
                     "Daily Tracker", HEIGHT);
         }
 
+        countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
+        
     }//GEN-LAST:event_rmBtnActionPerformed
 
     private void updBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updBtnActionPerformed
@@ -696,19 +757,46 @@ public class userFrame extends javax.swing.JFrame {
 
     private void reloadBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBoxMouseClicked
         DefaultTableModel model = (DefaultTableModel) goalTable.getModel();
-        ArrayList<Object> list = (ArrayList<Object>) main.getTable().get(main.userLogged);
-        model.setRowCount(0);
+        String filePath = writeHandler.filePath;
+        File file = new File(filePath);
+
         try {
-            if (!(list.isEmpty() || list == null)) {
-                for (int i = 0; i < list.size(); i++) {
-                    Object[] obj = (Object[]) list.get(i);
-                    model.addRow(obj);
-                }
+            FileReader reader = new FileReader(file);
+            BufferedReader buffered = new BufferedReader(reader);
+
+            Object[] lines = buffered.lines().toArray();
+
+            for (int i = 0; i < lines.length; i++) {
+                String[] row = lines[i].toString().split("///");
+                model.addRow(row);
             }
         } catch (Exception e) {
-            System.out.println("hi");
         }
+        
+        countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
+        
     }//GEN-LAST:event_reloadBoxMouseClicked
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String filePath = writeHandler.filePath;
+        File file = new File(filePath);
+        try {
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter buffered = new BufferedWriter(fw);
+
+            for (int i = 0; i < goalTable.getRowCount(); i++) {
+                for (int j = 0; j < goalTable.getColumnCount(); j++) {
+                    buffered.write(goalTable.getValueAt(i, j).toString() + "///");
+                }
+                buffered.newLine();
+            }
+
+            buffered.close();
+            fw.close();
+        } catch (Exception e) {
+            System.err.println("ERROR");
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -735,7 +823,6 @@ public class userFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new userFrame().setVisible(true));
         JOptionPane.showMessageDialog(null, "Selamat Datang! " + main.userLogged,
                 "Daily Tracker", HEIGHT);
-        loadHash();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -743,6 +830,7 @@ public class userFrame extends javax.swing.JFrame {
     private javax.swing.JLabel activityLabel;
     private javax.swing.JButton addTBtn;
     private javax.swing.JPanel backPanel;
+    private javax.swing.JLabel countLabel;
     private javax.swing.JTextField dateField;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JPanel goalPanel;
@@ -755,6 +843,7 @@ public class userFrame extends javax.swing.JFrame {
     private javax.swing.JButton outBtn;
     private javax.swing.JCheckBox reloadBox;
     private javax.swing.JButton rmBtn;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JTextField searchField;
     private javax.swing.JLabel sessionLabel;
     private javax.swing.JTabbedPane tabbedPanel;

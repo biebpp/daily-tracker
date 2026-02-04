@@ -2,7 +2,6 @@ package com.rozy.dailytracker;
 
 import com.rozy.dailytracker.dekstop.loginFrame;
 import static java.awt.image.ImageObserver.HEIGHT;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -16,20 +15,6 @@ public class main {
     public static String userLogged = "";
 
     private static boolean succesLog = false;
-
-//    user data
-
-    static HashMap<String, ArrayList> userTable = new HashMap<>();
-    ArrayList<Object> arr = new ArrayList<>();
-        
-    public void addTable(Object obj) {
-        arr.add(obj);
-        userTable.put(userLogged, arr);
-    }
-    
-    public HashMap getTable() {
-        return userTable;
-    }
     
 //    login var
     public void addUser(String user, String pass) {

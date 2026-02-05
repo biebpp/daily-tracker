@@ -492,7 +492,7 @@ public class userFrame extends javax.swing.JFrame {
                 String[] row = lines[i].toString().split("///");
                 model.addRow(row);
             }
-            
+
             countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
         } catch (Exception e) {
         }
@@ -555,7 +555,7 @@ public class userFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Target Telah Ditambahkan",
                     "Daily Tracker", HEIGHT);
         }
-        
+
         countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
     }//GEN-LAST:event_addTBtnActionPerformed
 
@@ -714,7 +714,7 @@ public class userFrame extends javax.swing.JFrame {
         }
 
         countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
-        
+
     }//GEN-LAST:event_rmBtnActionPerformed
 
     private void updBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updBtnActionPerformed
@@ -760,6 +760,7 @@ public class userFrame extends javax.swing.JFrame {
         String filePath = writeHandler.filePath;
         File file = new File(filePath);
 
+        model.setRowCount(0);
         try {
             FileReader reader = new FileReader(file);
             BufferedReader buffered = new BufferedReader(reader);
@@ -770,11 +771,28 @@ public class userFrame extends javax.swing.JFrame {
                 String[] row = lines[i].toString().split("///");
                 model.addRow(row);
             }
+
+            for (int i = 0; i < goalTable.getRowCount(); i++) {
+                model.setValueAt(i, i, 0);
+            }
+
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bufferedw = new BufferedWriter(fw);
+
+            for (int i = 0; i < goalTable.getRowCount(); i++) {
+                for (int j = 0; j < goalTable.getColumnCount(); j++) {
+                    bufferedw.write(goalTable.getValueAt(i, j).toString() + "///");
+                }
+                bufferedw.newLine();
+            }
+
+            buffered.close();
+            fw.close();
         } catch (Exception e) {
         }
-        
+
         countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
-        
+
     }//GEN-LAST:event_reloadBoxMouseClicked
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed

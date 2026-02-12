@@ -610,6 +610,7 @@ public class userFrame extends javax.swing.JFrame {
             dateLabel.setForeground(new java.awt.Color(255, 255, 255));
             timeLabel.setForeground(new java.awt.Color(255, 255, 255));
             sessionLabel.setForeground(new java.awt.Color(255, 255, 255));
+            countLabel.setForeground(new java.awt.Color(255, 255, 255));
 
             outBtn.setBackground(new java.awt.Color(0, 0, 0));
             outBtn.setForeground(new java.awt.Color(250, 250, 250));
@@ -662,6 +663,7 @@ public class userFrame extends javax.swing.JFrame {
             dateLabel.setForeground(new java.awt.Color(0, 0, 0));
             sessionLabel.setForeground(new java.awt.Color(0, 0, 0));
             timeLabel.setForeground(new java.awt.Color(0, 0, 0));
+            countLabel.setForeground(new java.awt.Color(0, 0, 0));
 
             outBtn.setBackground(new java.awt.Color(255, 255, 255));
             outBtn.setForeground(new java.awt.Color(0, 0, 0));

@@ -265,7 +265,7 @@ public class loginFrame extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
@@ -273,16 +273,16 @@ public class loginFrame extends javax.swing.JFrame {
         if (!(userField.getText().equals("") || String.valueOf(passField.getPassword()).equals(""))) {
             if (!(clickedUser && clickedPass)) {
                 JOptionPane.showMessageDialog(null, "Masukkan Username atau Password",
-                        "Daily Tracker", HEIGHT);
+                        "Daily Tracker", JOptionPane.ERROR_MESSAGE);
             } else if (String.valueOf(passField.getPassword()).length() < 8) {
                 JOptionPane.showMessageDialog(null, "Password Harus Lebih dari 8 Digit",
-                        "Daily Tracker", HEIGHT);
+                        "Daily Tracker", JOptionPane.WARNING_MESSAGE);
             } else {
                 main.addUser(userField.getText(), String.valueOf(passField.getPassword()));
             }
         } else {
             JOptionPane.showMessageDialog(null, "Username atau Password tidak boleh kosong",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_regBtnActionPerformed
 
@@ -307,7 +307,7 @@ public class loginFrame extends javax.swing.JFrame {
 
         if (yn == 1) {
             JOptionPane.showMessageDialog(null, "Anda telah Keluar dari Aplikasi Daily Tracker",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.WARNING_MESSAGE);
             System.exit(0);
         }
     }//GEN-LAST:event_extBtnActionPerformed

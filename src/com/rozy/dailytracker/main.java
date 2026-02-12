@@ -79,7 +79,7 @@ public class main {
 
             userLog.put(user, pass);
             JOptionPane.showMessageDialog(null, "Anda telah Membuat Akun",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.INFORMATION_MESSAGE);
         }
         if (user.equals("show") && pass.equals("SHOWMEPLS")) {
             System.out.println("User List: " + userLog);
@@ -90,7 +90,7 @@ public class main {
         String pw = userLog.get(user);
         if (userLog.containsKey(user) && pass.equals(pw)) {
             JOptionPane.showMessageDialog(null, "Anda Telah Login",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.INFORMATION_MESSAGE);
             userLogged = user;
             succesLog = true;
             if (user.equals(userAdmin) && pw.equals(passAdmin)) {
@@ -99,7 +99,7 @@ public class main {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Password Anda Salah",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.ERROR_MESSAGE);
         }
     }
 

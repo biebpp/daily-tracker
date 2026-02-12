@@ -504,7 +504,7 @@ public class userFrame extends javax.swing.JFrame {
 
         if (yn == 1) {
             JOptionPane.showMessageDialog(null, "Anda telah Keluar dari Akun Anda",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.WARNING_MESSAGE);
             loginFrame loginFrame = new loginFrame();
             loginFrame.mainFrame();
 
@@ -534,7 +534,7 @@ public class userFrame extends javax.swing.JFrame {
         if (activityField.getText().equals("Masukkan Nama Aktifitas...") || dateField.getText().equals("Masukkan Deadline...")
                 || activityField.getText().equals("") || dateField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Harap Masukkan Target",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.ERROR_MESSAGE);
         } else {
             String number = String.valueOf(goalTable.getRowCount());
             String activity = activityField.getText();
@@ -553,10 +553,10 @@ public class userFrame extends javax.swing.JFrame {
             clickedActivity = false;
             clickedDead = false;
             JOptionPane.showMessageDialog(null, "Target Telah Ditambahkan",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.INFORMATION_MESSAGE);
+            countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
         }
 
-        countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
     }//GEN-LAST:event_addTBtnActionPerformed
 
     private void activityFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityFieldMouseClicked
@@ -707,10 +707,10 @@ public class userFrame extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Target Telah Terhapus",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Index Tidak Tersedia",
-                    "Daily Tracker", HEIGHT);
+                    "Daily Tracker", JOptionPane.ERROR_MESSAGE);
         }
 
         countLabel.setText("Jumlah Target : " + String.valueOf(goalTable.getRowCount()));
@@ -724,12 +724,12 @@ public class userFrame extends javax.swing.JFrame {
             if (activityField.getText().equals("Masukkan Nama Aktifitas...") || dateField.getText().equals("Masukkan Deadline...")
                     || activityField.getText().equals("") || dateField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Harap Masukkan Target",
-                        "Daily Tracker", HEIGHT);
+                        "Daily Tracker", JOptionPane.ERROR_MESSAGE);
             } else {
                 model.setValueAt(activityField.getText(), row, 1);
                 model.setValueAt(dateField.getText(), row, 3);
                 JOptionPane.showMessageDialog(null, "Target Telah Diperbarui",
-                        "Daily Tracker", HEIGHT);
+                        "Daily Tracker", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Index Tidak Tersedia",
@@ -840,7 +840,7 @@ public class userFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new userFrame().setVisible(true));
         JOptionPane.showMessageDialog(null, "Selamat Datang! " + main.userLogged,
-                "Daily Tracker", HEIGHT);
+                "Daily Tracker", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
